@@ -19,23 +19,36 @@ public class Panel extends JPanel {
 
     private JPanel topPanel = new JPanel();
 
+    private Color backgroundColor = new Color(241, 231, 231);
+    private Color topTimeColor = new Color(230, 157, 184);
+    private Color timerColor = new Color(230, 157, 184);
+    private Color startButtonBackgroundColor = new Color(255, 208, 199);
+
     public Panel() {
         // SET LAYOUT FOR MAIN PANEL
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // SET BACKGROUND COLOR FOR MAIN PANEL
-        this.setBackground(new Color(241, 231, 231));
+        this.setBackground(backgroundColor);
 
-        // SET LAYOUT FOR TOP PANEL
+        // TOP PANEL CONFIGURATION
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.setBackground(backgroundColor);
 
         // SET DEFAULT TEXT FOR TOP TIME LABEL
         timeCountDownLabel = new JLabel(timeCountDownInMinutes + "m");
 
+        // CONFIGURE TOP TIMER TEXT (MINUTE PICKER)
+        setLabelTextSize(timeCountDownLabel, 50);
+        timeCountDownLabel.setForeground(topTimeColor);
+
         // INITIALIZE COUNTER LABEL
         counterLabel = new JLabel(formatTime(timeCountDown));
         setLabelTextSize(counterLabel, counterTextSize);
-        counterLabel.setForeground(new Color(230, 157, 184));
+        counterLabel.setForeground(timerColor);
+
+        // SET START BUTTON SIZE
+        startButton.setPreferredSize(new Dimension(100, 100));
 
         // TOP PANEL CREATION
         topPanel.add(removeFiveMinutesButton);
