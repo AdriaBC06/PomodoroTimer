@@ -14,6 +14,8 @@ public class Panel extends JPanel {
     private JButton startButton = new JButton("START!");
     private JButton addOneMinuteButton = new JButton("+1");
     private JButton removeOneMinuteButton = new JButton("-1");
+    private JButton addFiveMinutesButton = new JButton("+5");
+    private JButton removeFiveMinutesButton = new JButton("-5");
 
     private JPanel topPanel = new JPanel();
 
@@ -30,11 +32,15 @@ public class Panel extends JPanel {
         setLabelTextSize(counterLabel, counterTextSize);
         counterLabel.setForeground(new Color(230, 157, 184));
 
+        topPanel.add(removeFiveMinutesButton);
+        topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         topPanel.add(removeOneMinuteButton);
         topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         topPanel.add(timeCountDownLabel);
         topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         topPanel.add(addOneMinuteButton);
+        topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        topPanel.add(addFiveMinutesButton);
 
         this.add(topPanel);
 
@@ -52,12 +58,13 @@ public class Panel extends JPanel {
         });
 
         startButton.addActionListener(e -> {
+            timeCountDown = timeCountDownInMinutes * 60;
             timer.start();
             System.out.println("timer started");
         });
 
         removeOneMinuteButton.addActionListener(e -> {
-            if (timeCountDownInMinutes > 1){
+            if (timeCountDownInMinutes > 1) {
                 timeCountDownInMinutes--;
             }
 
@@ -65,8 +72,25 @@ public class Panel extends JPanel {
         });
 
         addOneMinuteButton.addActionListener(e -> {
-            if (timeCountDownInMinutes < 120){
+            if (timeCountDownInMinutes < 120) {
                 timeCountDownInMinutes++;
+            }
+
+            updateText(timeCountDownLabel, (timeCountDownInMinutes + "m"));
+        });
+
+        removeFiveMinutesButton.addActionListener(e -> {
+            if (timeCountDownInMinutes > 5) {
+                timeCountDownInMinutes -= 5;
+            }
+
+            updateText(timeCountDownLabel, (timeCountDownInMinutes + "m"));
+        });
+
+        addFiveMinutesButton.addActionListener(e -> {
+            timeCountDownInMinutes += 5;
+            if (timeCountDownInMinutes > 120) {
+                timeCountDownInMinutes = 120;
             }
 
             updateText(timeCountDownLabel, (timeCountDownInMinutes + "m"));
