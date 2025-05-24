@@ -17,12 +17,17 @@ public class Panel extends JPanel {
     private JButton addFiveMinutesButton = new JButton("+5");
     private JButton removeFiveMinutesButton = new JButton("-5");
 
+    private JButton[] minutePickerButtonsList = {addOneMinuteButton, removeOneMinuteButton, addFiveMinutesButton, removeFiveMinutesButton};
+
     private JPanel topPanel = new JPanel();
 
-    private Color backgroundColor = new Color(241, 231, 231);
-    private Color topTimeColor = new Color(230, 157, 184);
-    private Color timerColor = new Color(230, 157, 184);
-    private Color startButtonBackgroundColor = new Color(255, 208, 199);
+    private Color backgroundColor = Colors.DARKMARINEBLUE;
+    private Color topTimeColor = Colors.LIGHTMARINEBLUE;
+    private Color topButtonsTextColor = Colors.DARKMARINEBLUE;
+    private Color topButtonsBackgroundColor = Colors.LIGHTMARINEBLUE;
+    private Color timerColor = Colors.LIGHTMARINEBLUE;
+    private Color startButtonTextColor = Colors.DARKMARINEBLUE;
+    private Color startButtonBackgroundColor = Colors.LIGHTMARINEBLUE;
 
     public Panel() {
         // SET LAYOUT FOR MAIN PANEL
@@ -38,17 +43,44 @@ public class Panel extends JPanel {
         // SET DEFAULT TEXT FOR TOP TIME LABEL
         timeCountDownLabel = new JLabel(timeCountDownInMinutes + "m");
 
-        // CONFIGURE TOP TIMER TEXT (MINUTE PICKER)
+        // TOP TIMER TEXT (MINUTE PICKER) CONFIGURATION
         setLabelTextSize(timeCountDownLabel, 50);
         timeCountDownLabel.setForeground(topTimeColor);
+
+        // MINUTE PICKER BUTTONS CONFIGURATION
+        Dimension topButtonsSize = new Dimension(60, 50); // SIZE
+        for (JButton button : minutePickerButtonsList){
+            button.setMinimumSize(topButtonsSize); // MINIMUM SIZE
+            button.setMaximumSize(topButtonsSize); // MAXIMUM SIZE
+            button.setPreferredSize(topButtonsSize); // PREFERRED SIZE
+            button.setForeground(topButtonsTextColor); // TEXT COLOR
+            button.setBackground(topButtonsBackgroundColor); // BACKGROUND COLOR
+            button.setFont(new Font(button.getFont().getName(), button.getFont().getStyle(), 20)); // CHANGE FONT SIZE
+            button.setBorderPainted(false); // REMOVE BORDER
+            // REMOVE FOCUS STYLE
+            button.setFocusPainted(false);
+            button.setContentAreaFilled(true);
+            button.setOpaque(true);
+        }
 
         // INITIALIZE COUNTER LABEL
         counterLabel = new JLabel(formatTime(timeCountDown));
         setLabelTextSize(counterLabel, counterTextSize);
         counterLabel.setForeground(timerColor);
 
-        // SET START BUTTON SIZE
-        startButton.setPreferredSize(new Dimension(100, 100));
+        // START BUTTON CONFIGURATION
+        Dimension startButtonSize = new Dimension(300, 100); // SIZE
+        startButton.setMinimumSize(startButtonSize); // MINIMUM SIZE
+        startButton.setMaximumSize(startButtonSize); // MAXIMUM SIZE
+        startButton.setPreferredSize(startButtonSize); // PREFERRED SIZE
+        startButton.setFont(new Font(startButton.getFont().getName(), startButton.getFont().getStyle(), 50)); // CHANGE FONT SIZE
+        startButton.setForeground(startButtonTextColor); // SET TEXT COLOR
+        startButton.setBackground(startButtonBackgroundColor); // SET BACKGROUND COLOR
+        startButton.setBorderPainted(false); // REMOVE BORDER
+        // REMOVE FOCUS STYLE
+        startButton.setFocusPainted(false);
+        startButton.setContentAreaFilled(true);
+        startButton.setOpaque(true);
 
         // TOP PANEL CREATION
         topPanel.add(removeFiveMinutesButton);
@@ -66,7 +98,7 @@ public class Panel extends JPanel {
         this.add(topPanel);
         this.add(Box.createRigidArea(new Dimension(0, 30)));
         this.add(counterLabel);
-        this.add(Box.createRigidArea(new Dimension(0, 20)));
+        this.add(Box.createRigidArea(new Dimension(0, 50)));
         this.add(startButton);
         topPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         counterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

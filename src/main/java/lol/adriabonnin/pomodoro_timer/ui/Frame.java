@@ -7,9 +7,9 @@ public class Frame extends JFrame {
     public Frame(){
         JPanel panel = new Panel();
 
-        this.add(panel);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setResizable(false);
 
         setTitle("Pomodoro Timer");
 
@@ -17,9 +17,11 @@ public class Frame extends JFrame {
         Dimension screenSize = screen.getScreenSize();
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
-        setSize(500, 500);
+        setSize(650, 500);
         setLocationRelativeTo(null);
 
         setVisible(true);
+
+        this.add(panel);
     }
 }
