@@ -106,7 +106,9 @@ public class Panel extends JPanel {
 
         // TIMER COUNTDOWN
         Timer timer = new Timer(1000, e -> {
-            timeCountDown--;
+            if(timeCountDown > 0){
+                timeCountDown--;
+            }
             updateText(counterLabel, formatTime(timeCountDown));
         });
 
