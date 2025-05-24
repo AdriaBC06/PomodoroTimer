@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Panel extends JPanel {
     private JLabel timeCountDownLabel;
-    private int getTimeCountDownInMinutes = 25;
+    private int timeCountDownInMinutes = 25;
     private int timeCountDown;
 
     private JLabel counterLabel;
@@ -15,28 +15,34 @@ public class Panel extends JPanel {
     private JButton addOneMinuteButton = new JButton("+1");
     private JButton removeOneMinuteButton = new JButton("-1");
 
+    private JPanel topPanel = new JPanel();
+
     public Panel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.setBackground(new Color(241, 231, 231));
 
-        timeCountDownLabel = new JLabel(String.valueOf(getTimeCountDownInMinutes));
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+
+        timeCountDownLabel = new JLabel(timeCountDownInMinutes + "m");
 
         counterLabel = new JLabel(formatTime(timeCountDown));
         setLabelTextSize(counterLabel, counterTextSize);
         counterLabel.setForeground(new Color(230, 157, 184));
 
-        this.add(removeOneMinuteButton);
-        this.add(timeCountDownLabel);
-        this.add(addOneMinuteButton);
+        topPanel.add(removeOneMinuteButton);
+        topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        topPanel.add(timeCountDownLabel);
+        topPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        topPanel.add(addOneMinuteButton);
+
+        this.add(topPanel);
 
         this.add(counterLabel);
 
         this.add(startButton);
 
-        removeOneMinuteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        timeCountDownLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        addOneMinuteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        topPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         counterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -48,6 +54,22 @@ public class Panel extends JPanel {
         startButton.addActionListener(e -> {
             timer.start();
             System.out.println("timer started");
+        });
+
+        removeOneMinuteButton.addActionListener(e -> {
+            if (timeCountDownInMinutes > 1){
+                timeCountDownInMinutes--;
+            }
+
+            updateText(timeCountDownLabel, (timeCountDownInMinutes + "m"));
+        });
+
+        addOneMinuteButton.addActionListener(e -> {
+            if (timeCountDownInMinutes < 120){
+                timeCountDownInMinutes++;
+            }
+
+            updateText(timeCountDownLabel, (timeCountDownInMinutes + "m"));
         });
     }
 
